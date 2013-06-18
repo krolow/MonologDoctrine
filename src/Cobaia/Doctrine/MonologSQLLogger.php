@@ -9,6 +9,11 @@ class MonologSQLLogger implements SQLLogger
 {
 
     private $logger;
+    
+    /**
+     * @var float
+     */
+    protected $startTime;
 
     public function __construct(Logger $logger = null, StreamHandler $handler = null, $path = null)
     {
@@ -34,6 +39,8 @@ class MonologSQLLogger implements SQLLogger
         if ($types) {
             $this->logger->addDebug(json_encode($types));
         }
+        
+        $this->startTime = microtime(true);
     }
 
     /**
@@ -41,6 +48,7 @@ class MonologSQLLogger implements SQLLogger
      */
     public function stopQuery()
     {
-
+        $ms = round(((microtime(true) - $this->startTime) * 1000));
+        $this->logger->addDebug("Query took {$ms}ms.");
     }
 }
