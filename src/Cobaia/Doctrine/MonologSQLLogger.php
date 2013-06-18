@@ -34,6 +34,8 @@ class MonologSQLLogger implements SQLLogger
         if ($types) {
             $this->logger->addDebug(json_encode($types));
         }
+        
+        $this->start_time = microtime(true);
     }
 
     /**
@@ -41,6 +43,7 @@ class MonologSQLLogger implements SQLLogger
      */
     public function stopQuery()
     {
-
+        $ms = round(((microtime(true) - $this->start_time) * 1000));
+        $this->logger->addDebug("Query took {$ms}ms.");
     }
 }
