@@ -19,7 +19,7 @@ class MonologSQLLogger implements SQLLogger
     {
         $this->logger = $logger ?: new Logger('doctrine');
         if (is_null($handler) && is_null($path)) {
-            throw new InvalidArgumentException('As you are not passing one handler, you must provide one path!');
+            throw new \InvalidArgumentException('As you are not passing one handler, you must provide one path!');
         }
         $handler = $handler ?: new StreamHandler($path . 'doctrine.log', Logger::DEBUG);
         $this->logger->pushHandler($handler);
